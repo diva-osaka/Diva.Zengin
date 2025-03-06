@@ -1,6 +1,7 @@
 namespace Diva.Zengin.Formats;
 
-public class FileFormat
+public enum FileFormat
 {
-    
+    Zengin,
+    Csv
 }

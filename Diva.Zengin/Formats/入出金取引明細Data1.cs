@@ -7,15 +7,15 @@ namespace Diva.Zengin.Formats;
 /// 入出金取引明細のデータ・レコードを表すクラス。
 /// （普通預金・当座預金・貯蓄預金の場合）
 /// </summary>
-public class 入出金取引明細Data
+public class 入出金取引明細Data1 : IRecord
 {
     /// <summary>
     /// データ区分 (N(1))
     /// 2：データ・レコード 
     /// </summary>
     [Index(0)]
-    [TypeConverter(typeof(NumberTypeConverter<int>), 1)]
-    public データ区分 データ区分 { get; set; }
+    [TypeConverter(typeof(NumberTypeConverter<データ区分>), 1)]
+    public データ区分 データ区分 { get; set; } = データ区分.Data;
 
     /// <summary>
     /// 照会番号 (N(8))
@@ -183,5 +183,5 @@ public class 入出金取引明細Data
     /// </summary>
     [Index(19)]
     [TypeConverter(typeof(CharacterTypeConverter), 1)]
-    public string ダミー { get; set; } = " ";
+    public string ダミー { get; set; } = "";
 }

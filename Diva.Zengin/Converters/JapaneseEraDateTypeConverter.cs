@@ -5,19 +5,38 @@ using CsvHelper.TypeConversion;
 
 namespace Diva.Zengin.Converters;
 
-public class 和暦日付TypeConverter : DefaultTypeConverter
+/// <summary>
+/// 和暦 (N(6)) TypeConverter
+/// 読み込み時、DateOnly に変換。
+/// 書き込み時、和暦yyMMddに変換。
+/// <remarks>任意項目は DateOnly? とすること</remarks>
+/// </summary>
+internal class JapaneseEraDateTypeConverter : DefaultTypeConverter
 {
-    public override object ConvertFromString(string? text, IReaderRow row, MemberMapData memberMapData)
+    public override object? ConvertFromString(string? text, IReaderRow row, MemberMapData memberMapData)
     {
-        if (string.IsNullOrWhiteSpace(text) || text.Length != 6)
-            throw new FormatException($"Invalid date format: {text}");
+        var fieldName = memberMapData.Names.FirstOrDefault() ?? "Unknown Field";
+        var targetType = memberMapData.Member?.MemberType();
+
+        if (string.IsNullOrWhiteSpace(text) || text == "000000")
+        {
+            if (targetType == typeof(DateOnly?))
+                return null;
+
+            // DateOnly? ではないのに空白の場合
+            throw new FormatException(
+                $"[{fieldName}] Invalid empty date format. Expected 6-digit Japanese era date for type {targetType?.Name ?? "Unknown"}.");
+        }
+
+        if (text.Length != 6)
+            throw new FormatException(
+                $"[{fieldName}] Invalid date format: '{text}'. Expected 6-digit Japanese era date (yyMMdd).");
 
         return 和暦To西暦Converter.Convert和暦日付ToDateOnly(text);
     }
 
     public override string ConvertToString(object? value, IWriterRow row, MemberMapData memberMapData)
     {
-        // CultureInfoを日本のカレンダーに設定
         var culture = new CultureInfo("ja-JP", true)
         {
             DateTimeFormat =
@@ -28,6 +47,6 @@ public class 和暦日付TypeConverter : DefaultTypeConverter
 
         return value is DateOnly date
             ? date.ToString("yyMMdd", culture)
-            : throw new FormatException("Value is not a DateOnly type");
+            : "000000";
     }
 }

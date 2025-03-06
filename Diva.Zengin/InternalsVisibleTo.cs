@@ -1,6 +1,4 @@
-namespace Diva.Zengin;
+using System.Runtime.CompilerServices;
 
-public class InternalsVisibleTo
-{
-    
-}
+// Make internals visible to the test project
+[assembly: InternalsVisibleTo("Diva.Zengin.Tests")]

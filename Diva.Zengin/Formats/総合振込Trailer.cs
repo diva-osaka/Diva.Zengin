@@ -36,7 +36,7 @@ public class 総合振込Trailer : IRecord
     /// ダミー (C(101))  
     /// スペースとする。
     /// </summary>
-    [Index(2)]
+    [Index(3)]
     [TypeConverter(typeof(CharacterTypeConverter), 101)]
     public string ダミー  { get; set; } = "";
 }

@@ -16,7 +16,7 @@ internal static class PropertyAnalyzer
     /// プロパティのIndex属性・TypeConverter属性からインデックス値と文字数を取得する
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <returns>Key: index, Value: lenght</returns>
+    /// <returns>Key: index, Value: length</returns>
     public static Dictionary<int, int> GetIndexToLengthMap<T>() where T : IRecord
     {
         var result = new Dictionary<int, int>();

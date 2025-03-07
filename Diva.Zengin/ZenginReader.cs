@@ -17,7 +17,7 @@ public class ZenginReader<T>
         _stream = stream ?? throw new ArgumentNullException(nameof(stream));
     }
 
-    public async Task<T?> ReadAsync()
+    public async Task<T?> ReadAsync(FileFormat format = FileFormat.Csv)
     {
         if (_path == null && _stream == null)
             throw new InvalidOperationException("Both path and stream cannot be null.");
@@ -54,7 +54,7 @@ public class ZenginReader<T>
         if (sequenceType == typeof(入出金取引明細1))
         {
             var result =
-                await CreateReader<入出金取引明細1, 入出金取引明細Header, 入出金取引明細Data1, 入出金取引明細Trailer, 入出金取引明細End>(_path, _stream);
+                await CreateReader<入出金取引明細1, 入出金取引明細Header, 入出金取引明細Data1, 入出金取引明細Trailer, 入出金取引明細End>(_path, _stream, format);
 
             if (result.Count == 0 && isSingleResult)
                 return default; // null
@@ -66,7 +66,7 @@ public class ZenginReader<T>
 
         if (sequenceType == typeof(総合振込))
         {
-            var result = await CreateReader<総合振込, 総合振込Header, 総合振込Data, 総合振込Trailer, 総合振込End>(_path, _stream);
+            var result = await CreateReader<総合振込, 総合振込Header, 総合振込Data, 総合振込Trailer, 総合振込End>(_path, _stream, format);
 
             if (result.Count == 0 && isSingleResult)
                 return default; // null
@@ -91,17 +91,17 @@ public class ZenginReader<T>
     }
 
     private static async Task<List<TSequence>> CreateReader<TSequence, THeader, TData, TTrailer, TEnd>(string? path,
-        Stream? stream)
+        Stream? stream, FileFormat format)
         where TSequence : ISequence<THeader, TData, TTrailer, TEnd>, new()
-        where THeader : IRecord, new()
-        where TData : IRecord, new()
-        where TTrailer : IRecord, new()
-        where TEnd : IRecord, new()
+        where THeader : class, IRecord, new()
+        where TData : class, IRecord, new()
+        where TTrailer : class, IRecord, new()
+        where TEnd : class, IRecord, new()
     {
         var reader = stream != null
             ? new ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>(stream)
             : new ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>(path!);
 
-        return await reader.ReadAsync();
+        return await reader.ReadAsync(format);
     }
 }

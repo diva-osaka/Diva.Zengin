@@ -8,10 +8,10 @@ namespace Diva.Zengin;
 
 internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
     where TSequence : ISequence<THeader, TData, TTrailer, TEnd>, new()
-    where THeader : IRecord, new()
-    where TData : IRecord, new()
-    where TTrailer : IRecord, new()
-    where TEnd : IRecord, new()
+    where THeader : class, IRecord, new()
+    where TData : class, IRecord, new()
+    where TTrailer : class, IRecord, new()
+    where TEnd : class, IRecord, new()
 {
     private readonly string? _path;
     private readonly Stream? _stream;
@@ -31,7 +31,7 @@ internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
         _stream = stream ?? throw new ArgumentNullException(nameof(stream));
     }
 
-    public async Task<List<TSequence>> ReadAsync()
+    public async Task<List<TSequence>> ReadAsync(FileFormat format)
     {
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         var encoding = Encoding.GetEncoding("shift_jis");
@@ -56,8 +56,35 @@ internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
 
         try
         {
-            using var reader = new StreamReader(streamToUse, encoding, leaveOpen: streamToClose == null);
-            return await ReadFromStreamReaderAsync(reader);
+            if (format == FileFormat.Zengin)
+            {
+                // When format is Zengin, convert to CSV first
+                using var zenginReader = new StreamReader(streamToUse, encoding, leaveOpen: streamToClose == null);
+                using var convertedStream = new MemoryStream();
+                await using var csvWriter = new StreamWriter(convertedStream, encoding, leaveOpen: true);
+
+                // Read Zengin format and write as CSV
+                while (await zenginReader.ReadLineAsync() is { } line)
+                {
+                    // Convert Zengin format line to CSV format
+                    // This will need the specific Zengin-to-CSV conversion logic
+                    var csvLine = ConvertZenginLineToCsv(line);
+                    await csvWriter.WriteLineAsync(csvLine);
+                }
+
+                await csvWriter.FlushAsync();
+                convertedStream.Position = 0;
+
+                // Read from the converted CSV stream
+                using var csvReader = new StreamReader(convertedStream, encoding);
+                return await ReadFromStreamReaderAsync(csvReader);
+            }
+            else
+            {
+                // Original CSV processing
+                using var reader = new StreamReader(streamToUse, encoding, leaveOpen: streamToClose == null);
+                return await ReadFromStreamReaderAsync(reader);
+            }
         }
         finally
         {
@@ -92,14 +119,14 @@ internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
             }
 
             var dataType = (データ区分)dataTypeValue;
-            
+
             currentSequence ??= new TSequence();
-            
+
             ProcessRecord(csv, dataType, currentSequence);
 
-            if (dataType != データ区分.End) 
+            if (dataType != データ区分.End)
                 continue;
-            
+
             // Add the current sequence to the list
             sequences.Add(currentSequence);
             currentSequence = default;
@@ -134,6 +161,78 @@ internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(dataType), dataType, null);
+        }
+    }
+
+    /// <summary>
+    /// 全銀テキスト形式をCSV形式に変換します。
+    /// </summary>
+    /// <param name="zenginLine"></param>
+    /// <returns></returns>
+    /// <exception cref="FormatException"></exception>
+    private static string ConvertZenginLineToCsv(string zenginLine)
+    {
+        var dataTypeValue = int.Parse(zenginLine[0].ToString());
+        if (!Enum.IsDefined(typeof(データ区分), dataTypeValue))
+        {
+            throw new FormatException($"Unknown data type: {dataTypeValue}");
+        }
+
+        var dataType = (データ区分)dataTypeValue;
+        Dictionary<int, int> indexToLengthMap;
+
+        // Get the appropriate index-to-length map based on record type
+        switch (dataType)
+        {
+            case データ区分.Header:
+                indexToLengthMap = PropertyAnalyzer.GetIndexToLengthMap<THeader>();
+                break;
+            case データ区分.Data:
+                if (typeof(TData) == typeof(総合振込Data))
+                {
+                    indexToLengthMap = zenginLine[111] == 'Y'
+                        ? PropertyAnalyzer.GetIndexToLengthMap<総合振込WriteData1>()
+                        : PropertyAnalyzer.GetIndexToLengthMap<総合振込WriteData2>();
+                }
+                else
+                {
+                    indexToLengthMap = PropertyAnalyzer.GetIndexToLengthMap<TData>();
+                }
+
+                break;
+            case データ区分.Trailer:
+                indexToLengthMap = PropertyAnalyzer.GetIndexToLengthMap<TTrailer>();
+                break;
+            case データ区分.End:
+                indexToLengthMap = PropertyAnalyzer.GetIndexToLengthMap<TEnd>();
+                break;
+            default:
+                throw new FormatException();
+        }
+
+        // Parse the Zengin line into fields using the index-to-length map
+        var fields = new List<string>();
+        var startPos = 0;
+
+        foreach (var index in indexToLengthMap.Keys.OrderBy(k => k).ToList())
+        {
+            var length = indexToLengthMap[index];
+            var field = zenginLine.Substring(startPos, length);
+            fields.Add(field);
+            startPos += length;
+        }
+
+        // Convert to CSV format
+        return string.Join(",", fields.Select(EscapeCsvField));
+
+        string EscapeCsvField(string field)
+        {
+            if (field.Contains(',') || field.Contains('"') || field.Contains('\n'))
+            {
+                return $"\"{field.Replace("\"", "\"\"")}\"";
+            }
+
+            return field;
         }
     }
 }

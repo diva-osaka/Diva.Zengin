@@ -93,6 +93,7 @@ public class 入出金取引明細Header : IRecord
     /// 予備エリア (0固定)
     /// </summary>
     [Index(10)]
+    [TypeConverter(typeof(CharacterTypeConverter), 3)]
     public string ダミー { get; set; } = "000";
 
     /// <summary>

@@ -27,9 +27,18 @@ public class ZenginReader<T>
         bool isSingleResult;
         Type? containerType = null;
 
-        if (typeof(T) == typeof(入出金取引明細1) ||
-            typeof(T) == typeof(List<入出金取引明細1>) ||
-            typeof(T) == typeof(入出金取引明細1[]))
+        if (typeof(T) == typeof(振込入金通知A) ||
+            typeof(T) == typeof(List<振込入金通知A>) ||
+            typeof(T) == typeof(振込入金通知A[]))
+        {
+            sequenceType = typeof(振込入金通知A);
+            isSingleResult = typeof(T) == typeof(振込入金通知A);
+            if (!isSingleResult)
+                containerType = typeof(T) == typeof(List<振込入金通知A>) ? typeof(List<>) : typeof(Array);
+        }
+        else if (typeof(T) == typeof(入出金取引明細1) ||
+                 typeof(T) == typeof(List<入出金取引明細1>) ||
+                 typeof(T) == typeof(入出金取引明細1[]))
         {
             sequenceType = typeof(入出金取引明細1);
             isSingleResult = typeof(T) == typeof(入出金取引明細1);
@@ -51,10 +60,25 @@ public class ZenginReader<T>
         }
 
         // Read the appropriate sequence type
+        if (sequenceType == typeof(振込入金通知A))
+        {
+            var result =
+                await CreateReader<振込入金通知A, 振込入金通知Header, 振込入金通知DataA, 振込入金通知Trailer, 振込入金通知End>(_path, _stream,
+                    format);
+
+            if (result.Count == 0 && isSingleResult)
+                return default; // null
+
+            return isSingleResult
+                ? (T)(object)result.First()
+                : ConvertToContainer(result, containerType!);
+        }
+
         if (sequenceType == typeof(入出金取引明細1))
         {
             var result =
-                await CreateReader<入出金取引明細1, 入出金取引明細Header, 入出金取引明細Data1, 入出金取引明細Trailer, 入出金取引明細End>(_path, _stream, format);
+                await CreateReader<入出金取引明細1, 入出金取引明細Header, 入出金取引明細Data1, 入出金取引明細Trailer, 入出金取引明細End>(_path, _stream,
+                    format);
 
             if (result.Count == 0 && isSingleResult)
                 return default; // null

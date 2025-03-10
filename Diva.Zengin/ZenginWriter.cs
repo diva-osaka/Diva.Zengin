@@ -50,6 +50,13 @@ public class ZenginWriter<T>
         }
 
         // Handle specific sequence types
+        if (sequenceType == typeof(振込入金通知A))
+        {
+            await CreateWriter<振込入金通知A, 振込入金通知Header, 振込入金通知DataA, 振込入金通知Trailer, 振込入金通知End>(
+                _path, _stream, format, sequences.Cast<振込入金通知A>().ToList());
+            return;
+        }
+        
         if (sequenceType == typeof(入出金取引明細1))
         {
             await CreateWriter<入出金取引明細1, 入出金取引明細Header, 入出金取引明細Data1, 入出金取引明細Trailer, 入出金取引明細End>(

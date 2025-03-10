@@ -7,12 +7,14 @@ using Diva.Zengin.Formats;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace Diva.Zengin.Tests.Readers;
+namespace Diva.Zengin.Tests.Reader;
 
 [TestSubject(typeof(ZenginReader<>))]
 public class ZenginReaderTest
 {
     [Theory]
+    [InlineData(typeof(List<振込入金通知A>))]
+    [InlineData(typeof(振込入金通知A[]))]
     [InlineData(typeof(List<入出金取引明細1>))]
     [InlineData(typeof(入出金取引明細1[]))]
     [InlineData(typeof(List<総合振込>))]
@@ -26,7 +28,7 @@ public class ZenginReaderTest
         var readAsyncMethod = readerType.GetMethod(nameof(ZenginReader<object>.ReadAsync));
         Assert.NotNull(readAsyncMethod);
         
-        var task = readAsyncMethod.Invoke(reader, null);
+        var task = readAsyncMethod.Invoke(reader, [FileFormat.Csv]);
         Assert.NotNull(task);
         
         // Get the awaiter via reflection
@@ -49,6 +51,7 @@ public class ZenginReaderTest
     }
 
     [Theory]
+    [InlineData(typeof(振込入金通知A))]
     [InlineData(typeof(入出金取引明細1))]
     [InlineData(typeof(総合振込))]
     public Task ReadAsync_SingleType_ReturnsNull(Type type)
@@ -60,7 +63,7 @@ public class ZenginReaderTest
         var readAsyncMethod = readerType.GetMethod(nameof(ZenginReader<object>.ReadAsync));
         Assert.NotNull(readAsyncMethod);
         
-        var task = readAsyncMethod.Invoke(reader, null);
+        var task = readAsyncMethod.Invoke(reader, [FileFormat.Csv]);
         Assert.NotNull(task);
         
         // Get the awaiter via reflection

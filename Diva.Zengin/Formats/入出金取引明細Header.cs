@@ -109,8 +109,8 @@ public class 入出金取引明細Header : IRecord
     /// 右詰め・前0埋め
     /// </summary>
     [Index(12)]
-    [TypeConverter(typeof(NumberTypeConverter<int>), 10)]
-    public int 口座番号 { get; set; }
+    [TypeConverter(typeof(NumberTypeConverter<decimal>), 10)]
+    public decimal 口座番号 { get; set; }
 
     /// <summary>
     /// 口座名 (C(40))  

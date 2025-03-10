@@ -7,12 +7,22 @@ using Diva.Zengin.Formats;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace Diva.Zengin.Tests.Readers;
+namespace Diva.Zengin.Tests;
 
+/// <summary>
+/// ZenginReader のテストクラス。
+/// </summary>
 [TestSubject(typeof(ZenginReader<>))]
 public class ZenginReaderTest
 {
+    /// <summary>
+    /// 結果がない場合、TにレコードclassのList, Arrayを指定していた場合は空のコレクションを返す。
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     [Theory]
+    [InlineData(typeof(List<振込入金通知A>))]
+    [InlineData(typeof(振込入金通知A[]))]
     [InlineData(typeof(List<入出金取引明細1>))]
     [InlineData(typeof(入出金取引明細1[]))]
     [InlineData(typeof(List<総合振込>))]
@@ -26,7 +36,7 @@ public class ZenginReaderTest
         var readAsyncMethod = readerType.GetMethod(nameof(ZenginReader<object>.ReadAsync));
         Assert.NotNull(readAsyncMethod);
         
-        var task = readAsyncMethod.Invoke(reader, null);
+        var task = readAsyncMethod.Invoke(reader, [FileFormat.Csv]);
         Assert.NotNull(task);
         
         // Get the awaiter via reflection
@@ -48,7 +58,13 @@ public class ZenginReaderTest
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// 結果がない場合、Tにレコードclassを指定していた場合はnullを返す。
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     [Theory]
+    [InlineData(typeof(振込入金通知A))]
     [InlineData(typeof(入出金取引明細1))]
     [InlineData(typeof(総合振込))]
     public Task ReadAsync_SingleType_ReturnsNull(Type type)
@@ -60,7 +76,7 @@ public class ZenginReaderTest
         var readAsyncMethod = readerType.GetMethod(nameof(ZenginReader<object>.ReadAsync));
         Assert.NotNull(readAsyncMethod);
         
-        var task = readAsyncMethod.Invoke(reader, null);
+        var task = readAsyncMethod.Invoke(reader, [FileFormat.Csv]);
         Assert.NotNull(task);
         
         // Get the awaiter via reflection

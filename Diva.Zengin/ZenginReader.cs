@@ -64,7 +64,7 @@ public class ZenginReader<T>
         {
             var result =
                 await CreateReader<振込入金通知A, 振込入金通知Header, 振込入金通知DataA, 振込入金通知Trailer, 振込入金通知End>(_path, _stream,
-                    format);
+                    format).ConfigureAwait(false);
 
             if (result.Count == 0 && isSingleResult)
                 return default; // null
@@ -78,7 +78,7 @@ public class ZenginReader<T>
         {
             var result =
                 await CreateReader<入出金取引明細1, 入出金取引明細Header, 入出金取引明細Data1, 入出金取引明細Trailer, 入出金取引明細End>(_path, _stream,
-                    format);
+                    format).ConfigureAwait(false);
 
             if (result.Count == 0 && isSingleResult)
                 return default; // null
@@ -90,7 +90,8 @@ public class ZenginReader<T>
 
         if (sequenceType == typeof(総合振込))
         {
-            var result = await CreateReader<総合振込, 総合振込Header, 総合振込Data, 総合振込Trailer, 総合振込End>(_path, _stream, format);
+            var result = await CreateReader<総合振込, 総合振込Header, 総合振込Data, 総合振込Trailer, 総合振込End>(_path, _stream, format)
+                .ConfigureAwait(false);
 
             if (result.Count == 0 && isSingleResult)
                 return default; // null
@@ -126,6 +127,6 @@ public class ZenginReader<T>
             ? new ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>(stream)
             : new ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>(path!);
 
-        return await reader.ReadAsync(format);
+        return await reader.ReadAsync(format).ConfigureAwait(false);
     }
 }

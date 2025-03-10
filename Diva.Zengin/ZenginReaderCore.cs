@@ -64,32 +64,32 @@ internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
                 await using var csvWriter = new StreamWriter(convertedStream, encoding, leaveOpen: true);
 
                 // Read Zengin format and write as CSV
-                while (await zenginReader.ReadLineAsync() is { } line)
+                while (await zenginReader.ReadLineAsync().ConfigureAwait(false) is { } line)
                 {
                     // Convert Zengin format line to CSV format
                     // This will need the specific Zengin-to-CSV conversion logic
                     var csvLine = ConvertZenginLineToCsv(line);
-                    await csvWriter.WriteLineAsync(csvLine);
+                    await csvWriter.WriteLineAsync(csvLine).ConfigureAwait(false);
                 }
 
-                await csvWriter.FlushAsync();
+                await csvWriter.FlushAsync().ConfigureAwait(false);
                 convertedStream.Position = 0;
 
                 // Read from the converted CSV stream
                 using var csvReader = new StreamReader(convertedStream, encoding);
-                return await ReadFromStreamReaderAsync(csvReader);
+                return await ReadFromStreamReaderAsync(csvReader).ConfigureAwait(false);
             }
             else
             {
                 // Original CSV processing
                 using var reader = new StreamReader(streamToUse, encoding, leaveOpen: streamToClose == null);
-                return await ReadFromStreamReaderAsync(reader);
+                return await ReadFromStreamReaderAsync(reader).ConfigureAwait(false);
             }
         }
         finally
         {
             if (streamToClose != null)
-                await streamToClose.DisposeAsync();
+                await streamToClose.DisposeAsync().ConfigureAwait(false);
         }
     }
 
@@ -106,7 +106,7 @@ internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
         var sequences = new List<TSequence>();
         TSequence? currentSequence = default;
 
-        while (await csv.ReadAsync())
+        while (await csv.ReadAsync().ConfigureAwait(false))
         {
             if (!int.TryParse(csv.GetField(0), out var dataTypeValue))
             {

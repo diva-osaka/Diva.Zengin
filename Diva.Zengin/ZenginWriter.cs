@@ -56,7 +56,7 @@ public class ZenginWriter<T>
                 _path, _stream, format, sequences.Cast<振込入金通知A>().ToList());
             return;
         }
-        
+
         if (sequenceType == typeof(入出金取引明細1))
         {
             await CreateWriter<入出金取引明細1, 入出金取引明細Header, 入出金取引明細Data1, 入出金取引明細Trailer, 入出金取引明細End>(
@@ -86,6 +86,6 @@ public class ZenginWriter<T>
             ? new ZenginWriterCore<TSequence, THeader, TData, TTrailer, TEnd>(stream)
             : new ZenginWriterCore<TSequence, THeader, TData, TTrailer, TEnd>(path!);
 
-        await writer.WriteAsync(sequences, format);
+        await writer.WriteAsync(sequences, format).ConfigureAwait(false);
     }
 }

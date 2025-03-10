@@ -78,13 +78,13 @@ internal class ZenginWriterCore<TSequence, THeader, TData, TTrailer, TEnd>
 
             foreach (var sequence in sequences)
             {
-                await WriteSequenceAsync(csv, sequence);
+                await WriteSequenceAsync(csv, sequence).ConfigureAwait(false);
             }
         }
         finally
         {
             if (streamToClose != null)
-                await streamToClose.DisposeAsync();
+                await streamToClose.DisposeAsync().ConfigureAwait(false);
         }
     }
 
@@ -92,7 +92,7 @@ internal class ZenginWriterCore<TSequence, THeader, TData, TTrailer, TEnd>
     {
         // Write header
         csv.WriteRecord(sequence.Header);
-        await csv.NextRecordAsync();
+        await csv.NextRecordAsync().ConfigureAwait(false);
 
         // Write data records
         foreach (var data in sequence.DataList)
@@ -114,16 +114,16 @@ internal class ZenginWriterCore<TSequence, THeader, TData, TTrailer, TEnd>
                 csv.WriteRecord(data);
             }
 
-            await csv.NextRecordAsync();
+            await csv.NextRecordAsync().ConfigureAwait(false);
         }
 
         // Write trailer
         csv.WriteRecord(sequence.Trailer);
-        await csv.NextRecordAsync();
+        await csv.NextRecordAsync().ConfigureAwait(false);
 
         // Write end record
         csv.WriteRecord(sequence.End);
-        await csv.NextRecordAsync();
+        await csv.NextRecordAsync().ConfigureAwait(false);
     }
 
     private static void RegisterClassMaps(CsvWriter csv)

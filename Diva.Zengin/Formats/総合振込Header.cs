@@ -54,6 +54,7 @@ public class 総合振込Header : IRecord
     /// 振込日を表わす。 MMDD (月-日)
     /// </summary>
     [Index(5)]
+    [TypeConverter(typeof(CharacterTypeConverter), 4)]
     public string 取組日 { get; set; }
 
     /// <summary>

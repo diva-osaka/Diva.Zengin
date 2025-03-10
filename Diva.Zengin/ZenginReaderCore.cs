@@ -190,7 +190,7 @@ internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
             case データ区分.Data:
                 if (typeof(TData) == typeof(総合振込Data))
                 {
-                    indexToLengthMap = zenginLine[111] == 'Y'
+                    indexToLengthMap = zenginLine[112] == 'Y'
                         ? PropertyAnalyzer.GetIndexToLengthMap<総合振込WriteData1>()
                         : PropertyAnalyzer.GetIndexToLengthMap<総合振込WriteData2>();
                 }

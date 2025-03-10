@@ -127,8 +127,8 @@ public class 入出金取引明細Data1 : IRecord
     /// </summary>
     /// <remarks>任意項目</remarks>
     [Index(13)]
-    [TypeConverter(typeof(NumberTypeConverter<int?>), 10)]
-    public int? 振込依頼人コード { get; set; }
+    [TypeConverter(typeof(NumberTypeConverter<decimal?>), 10)]
+    public decimal? 振込依頼人コード { get; set; }
 
     /// <summary>
     /// 振込依頼人名または契約者番号 (C(48))

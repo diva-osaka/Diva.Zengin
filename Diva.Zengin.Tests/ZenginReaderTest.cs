@@ -7,11 +7,19 @@ using Diva.Zengin.Formats;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace Diva.Zengin.Tests.Reader;
+namespace Diva.Zengin.Tests;
 
+/// <summary>
+/// ZenginReader のテストクラス。
+/// </summary>
 [TestSubject(typeof(ZenginReader<>))]
 public class ZenginReaderTest
 {
+    /// <summary>
+    /// 結果がない場合、TにレコードclassのList, Arrayを指定していた場合は空のコレクションを返す。
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     [Theory]
     [InlineData(typeof(List<振込入金通知A>))]
     [InlineData(typeof(振込入金通知A[]))]
@@ -50,6 +58,11 @@ public class ZenginReaderTest
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// 結果がない場合、Tにレコードclassを指定していた場合はnullを返す。
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     [Theory]
     [InlineData(typeof(振込入金通知A))]
     [InlineData(typeof(入出金取引明細1))]

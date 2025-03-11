@@ -6,7 +6,9 @@ namespace Diva.Zengin.Formats;
 /// <summary>
 /// 総合振込のトレーラ・レコードを表すクラス。
 /// </summary>
-public class 総合振込Trailer : IRecord
+[FluentSetter]
+[IndexToLengthMap]
+public partial class 総合振込Trailer : IRecord
 {
     /// <summary>
     /// データ区分 (N(1))  

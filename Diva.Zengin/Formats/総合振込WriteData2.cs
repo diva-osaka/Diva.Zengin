@@ -7,7 +7,8 @@ namespace Diva.Zengin.Formats;
 /// 総合振込のデータ・レコードを表すクラス。
 /// 顧客コードを持つ。
 /// </summary>
-public class 総合振込WriteData2 : IRecord
+[IndexToLengthMap]
+public partial class 総合振込WriteData2 : IRecord
 {
     /// <summary>
     /// データ区分 (N(1))  

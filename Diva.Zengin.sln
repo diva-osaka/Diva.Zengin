@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diva.Zengin", "Diva.Zengin\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diva.Zengin.Tests", "Diva.Zengin.Tests\Diva.Zengin.Tests.csproj", "{79D7E0DB-8C3E-43C8-AD9D-95C4440278C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diva.Zengin.SourceGenerator", "Diva.Zengin.SourceGenerator\Diva.Zengin.SourceGenerator.csproj", "{90FBCCBF-1A47-4C60-8B76-7D739AC8DC2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{79D7E0DB-8C3E-43C8-AD9D-95C4440278C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79D7E0DB-8C3E-43C8-AD9D-95C4440278C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79D7E0DB-8C3E-43C8-AD9D-95C4440278C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90FBCCBF-1A47-4C60-8B76-7D739AC8DC2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90FBCCBF-1A47-4C60-8B76-7D739AC8DC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90FBCCBF-1A47-4C60-8B76-7D739AC8DC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90FBCCBF-1A47-4C60-8B76-7D739AC8DC2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

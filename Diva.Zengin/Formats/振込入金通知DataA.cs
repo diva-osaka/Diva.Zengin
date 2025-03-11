@@ -7,7 +7,9 @@ namespace Diva.Zengin.Formats;
 /// 振込入金通知のデータ・レコードを表すクラス。
 /// フォーマットA
 /// </summary>
-public class 振込入金通知DataA : IRecord
+[FluentSetter]
+[IndexToLengthMap]
+public partial class 振込入金通知DataA : IRecord
 {
     /// <summary>
     /// データ区分 (N(1))

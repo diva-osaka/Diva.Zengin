@@ -6,7 +6,9 @@ namespace Diva.Zengin.Formats;
 /// <summary>
 /// 入出金取引明細のエンド・レコードを表すクラス。
 /// </summary>
-public class 入出金取引明細End : IRecord
+[FluentSetter]
+[IndexToLengthMap]
+public partial class 入出金取引明細End : IRecord
 {
     /// <summary>
     /// データ区分 (N(1))  

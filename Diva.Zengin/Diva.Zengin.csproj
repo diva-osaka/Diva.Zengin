@@ -14,7 +14,15 @@
 
     <ItemGroup>
       <PackageReference Include="CsvHelper" Version="33.0.1" />
-      <PackageReference Include="Riok.Mapperly" Version="4.1.1" />
+      <PackageReference Include="Riok.Mapperly" Version="4.1.1">
+        <ExcludeAssets>runtime</ExcludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Diva.Zengin.SourceGenerator\Diva.Zengin.SourceGenerator.csproj"
+                        OutputItemType="Analyzer"
+                        ReferenceOutputAssembly="false"/>
     </ItemGroup>
 
 </Project>

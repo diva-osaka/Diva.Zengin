@@ -8,10 +8,10 @@ namespace Diva.Zengin;
 
 internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
     where TSequence : ISequence<THeader, TData, TTrailer, TEnd>, new()
-    where THeader : class, IRecord, new()
-    where TData : class, IRecord, new()
-    where TTrailer : class, IRecord, new()
-    where TEnd : class, IRecord, new()
+    where THeader : class, IRecord, IIndexToLengthMap, new()
+    where TData : class, IRecord, IIndexToLengthMap, new()
+    where TTrailer : class, IRecord, IIndexToLengthMap, new()
+    where TEnd : class, IRecord, IIndexToLengthMap, new()
 {
     private readonly string? _path;
     private readonly Stream? _stream;
@@ -179,32 +179,31 @@ internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
         }
 
         var dataType = (データ区分)dataTypeValue;
-        Dictionary<int, int> indexToLengthMap;
+        SortedDictionary<int, int> indexToLengthMap;
 
         // Get the appropriate index-to-length map based on record type
         switch (dataType)
         {
             case データ区分.Header:
-                indexToLengthMap = PropertyAnalyzer.GetIndexToLengthMap<THeader>();
+                indexToLengthMap = THeader.GetIndexToLengthMap();
                 break;
             case データ区分.Data:
                 if (typeof(TData) == typeof(総合振込Data))
                 {
                     indexToLengthMap = zenginLine[112] == 'Y'
-                        ? PropertyAnalyzer.GetIndexToLengthMap<総合振込WriteData1>()
-                        : PropertyAnalyzer.GetIndexToLengthMap<総合振込WriteData2>();
+                        ? 総合振込WriteData1.GetIndexToLengthMap()
+                        : 総合振込WriteData2.GetIndexToLengthMap();
                 }
                 else
                 {
-                    indexToLengthMap = PropertyAnalyzer.GetIndexToLengthMap<TData>();
+                    indexToLengthMap = TData.GetIndexToLengthMap();
                 }
-
                 break;
             case データ区分.Trailer:
-                indexToLengthMap = PropertyAnalyzer.GetIndexToLengthMap<TTrailer>();
+                indexToLengthMap = TTrailer.GetIndexToLengthMap();
                 break;
             case データ区分.End:
-                indexToLengthMap = PropertyAnalyzer.GetIndexToLengthMap<TEnd>();
+                indexToLengthMap = TEnd.GetIndexToLengthMap();
                 break;
             default:
                 throw new FormatException();

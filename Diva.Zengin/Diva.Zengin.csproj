@@ -1,9 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>Diva.Zengin</PackageId>
+        <Version>1.0.1</Version>
+        <Authors>DIVA Co., Ltd.</Authors>
+        <Company>DIVA Co., Ltd.</Company>
+        <PackageDescription></PackageDescription>
+        <RepositoryUrl>https://github.com/diva-osaka/Diva.Zengin</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>

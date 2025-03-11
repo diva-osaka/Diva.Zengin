@@ -1,14 +1,14 @@
 using CsvHelper.Configuration.Attributes;
 using Diva.Zengin.Converters;
 
-namespace Diva.Zengin.Formats;
+namespace Diva.Zengin.Records;
 
 /// <summary>
 /// 総合振込のデータ・レコードを表すクラス。
-/// EDI情報を持つ。
+/// 顧客コードを持つ。
 /// </summary>
 [IndexToLengthMap]
-public partial class 総合振込WriteData1 : IRecord
+public partial class 総合振込WriteData2 : IRecord
 {
     /// <summary>
     /// データ区分 (N(1))  
@@ -102,21 +102,29 @@ public partial class 総合振込WriteData1 : IRecord
     public int 新規コード { get; set; }
 
     /// <summary>
-    /// EDI情報 (C(20))
-    /// 依頼人から受取人に対して通知するEDI情報を表わす。識別表示が「Y」の場合のみ。
-    /// 左詰め残りスペース
+    /// 顧客コード1 (N(10))  
+    /// 依頼人が定めた受取人識別のための顧客コードを表わす。識別表示が空白の場合のみ。
     /// </summary>
     /// <remarks>任意項目</remarks>
     [Index(11)]
-    [TypeConverter(typeof(CharacterTypeConverter), 20)]
-    public string? EDI情報 { get; set; }
+    [TypeConverter(typeof(NumberTypeConverter<decimal?>), 10)]
+    public decimal? 顧客コード1 { get; set; }
+
+    /// <summary>
+    /// 顧客コード2 (N(10))  
+    /// 依頼人が定めた受取人識別のための顧客コードを表わす。識別表示が空白の場合のみ。
+    /// </summary>
+    /// <remarks>任意項目</remarks>
+    [Index(12)]
+    [TypeConverter(typeof(NumberTypeConverter<decimal?>), 10)]
+    public decimal? 顧客コード2 { get; set; }
 
     /// <summary>
     /// 振込指定区分 (N(1))  
     /// 7: テレ振込, 8: 文書振込
     /// </summary>
     /// <remarks>任意項目</remarks>
-    [Index(12)]
+    [Index(13)]
     [TypeConverter(typeof(NumberTypeConverter<int?>), 1)]
     public int? 振込指定区分 { get; set; }
 
@@ -126,7 +134,7 @@ public partial class 総合振込WriteData1 : IRecord
     /// 本欄に「Y」表示を付した場合は、「EDI情報」を含む。 
     /// </summary>
     /// <remarks>任意項目</remarks>
-    [Index(13)]
+    [Index(14)]
     [BooleanTrueValues("Y")]
     [BooleanFalseValues(" ")]
     public bool 識別表示 { get; set; }
@@ -135,7 +143,7 @@ public partial class 総合振込WriteData1 : IRecord
     /// ダミー (C(7))  
     /// スペース
     /// </summary>
-    [Index(14)]
+    [Index(15)]
     [TypeConverter(typeof(CharacterTypeConverter), 7)]
     public string ダミー { get; set; } = "";
 }

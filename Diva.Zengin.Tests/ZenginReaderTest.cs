@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Diva.Zengin.Formats;
+using Diva.Zengin.Records;
 using JetBrains.Annotations;
 using Xunit;
 
@@ -36,7 +36,7 @@ public class ZenginReaderTest
         var readAsyncMethod = readerType.GetMethod(nameof(ZenginReader<object>.ReadAsync));
         Assert.NotNull(readAsyncMethod);
         
-        var task = readAsyncMethod.Invoke(reader, [FileFormat.Csv]);
+        var task = readAsyncMethod.Invoke(reader, null);
         Assert.NotNull(task);
         
         // Get the awaiter via reflection
@@ -76,7 +76,7 @@ public class ZenginReaderTest
         var readAsyncMethod = readerType.GetMethod(nameof(ZenginReader<object>.ReadAsync));
         Assert.NotNull(readAsyncMethod);
         
-        var task = readAsyncMethod.Invoke(reader, [FileFormat.Csv]);
+        var task = readAsyncMethod.Invoke(reader, null);
         Assert.NotNull(task);
         
         // Get the awaiter via reflection

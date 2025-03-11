@@ -2,7 +2,11 @@ using System.Globalization;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Diva.Zengin.Formats;
+using Diva.Zengin.Configuration;
+using Diva.Zengin.Records;
+using 総合振込Data = Diva.Zengin.Records.総合振込Data;
+using 総合振込WriteData1 = Diva.Zengin.Records.総合振込WriteData1;
+using 総合振込WriteData2 = Diva.Zengin.Records.総合振込WriteData2;
 
 namespace Diva.Zengin;
 
@@ -31,7 +35,7 @@ internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
         _stream = stream ?? throw new ArgumentNullException(nameof(stream));
     }
 
-    public async Task<List<TSequence>> ReadAsync(FileFormat format)
+    public async Task<List<TSequence>> ReadAsync(ZenginConfiguration config)
     {
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         var encoding = Encoding.GetEncoding("shift_jis");
@@ -56,7 +60,7 @@ internal class ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>
 
         try
         {
-            if (format == FileFormat.Zengin)
+            if (config.FileFormat == FileFormat.Zengin)
             {
                 // When format is Zengin, convert to CSV first
                 using var zenginReader = new StreamReader(streamToUse, encoding, leaveOpen: streamToClose == null);

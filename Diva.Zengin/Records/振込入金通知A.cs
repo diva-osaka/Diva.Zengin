@@ -1,4 +1,4 @@
-namespace Diva.Zengin.Formats;
+namespace Diva.Zengin.Records;
 
 /// <summary>
 /// 振込入金通知の全体を表すクラス。

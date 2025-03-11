@@ -27,7 +27,7 @@ public class IndexToLengthMapGenerator : IIncrementalGenerator
                 """);
             context.AddSource("IIndexToLengthMap.cs",
                 """
-                namespace Diva.Zengin.Formats;
+                namespace Diva.Zengin;
                 
                 public interface IIndexToLengthMap
                 {

@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 using System.Reflection;
 using CsvHelper.Configuration.Attributes;
 using Diva.Zengin.Converters;
-using Diva.Zengin.Formats;
+using Diva.Zengin.Records;
 using TypeConverterAttribute = CsvHelper.Configuration.Attributes.TypeConverterAttribute;
 
 namespace Diva.Zengin;

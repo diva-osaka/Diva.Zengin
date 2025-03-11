@@ -2,7 +2,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Diva.Zengin.Converters;
 
-namespace Diva.Zengin.Formats;
+namespace Diva.Zengin.Records;
 
 /// <summary>
 /// 総合振込データの列マッピング定義（読み込み時）

@@ -1,7 +1,7 @@
 using CsvHelper.Configuration.Attributes;
 using Diva.Zengin.Converters;
 
-namespace Diva.Zengin.Formats;
+namespace Diva.Zengin.Records;
 
 /// <summary>
 /// 総合振込のトレーラ・レコードを表すクラス。

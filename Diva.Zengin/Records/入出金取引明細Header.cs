@@ -1,7 +1,7 @@
 using CsvHelper.Configuration.Attributes;
 using Diva.Zengin.Converters;
 
-namespace Diva.Zengin.Formats;
+namespace Diva.Zengin.Records;
 
 /// <summary>
 /// 入出金取引明細のヘッダー・レコードを表すクラス。

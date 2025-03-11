@@ -1,6 +1,7 @@
 using System.IO;
 using System.Threading.Tasks;
-using Diva.Zengin.Formats;
+using Diva.Zengin.Configuration;
+using Diva.Zengin.Records;
 using Xunit;
 
 namespace Diva.Zengin.Tests;
@@ -12,14 +13,22 @@ public class WriteReadTest
 {
     private static async Task WriteAsync<T>(T data, Stream stream, FileFormat format) where T : ISequence
     {
-        var writer = new ZenginWriter<T>(stream);
-        await writer.WriteAsync(data, format);
+        var config = new ZenginConfiguration
+        {
+            FileFormat = format,
+        };
+        var writer = new ZenginWriter<T>(stream, config);
+        await writer.WriteAsync(data);
     }
 
     private static async Task<T?> ReadAsync<T>(Stream stream, FileFormat format) where T : ISequence
     {
-        var reader = new ZenginReader<T>(stream);
-        return await reader.ReadAsync(format);
+        var config = new ZenginConfiguration
+        {
+            FileFormat = format,
+        };
+        var reader = new ZenginReader<T>(stream, config);
+        return await reader.ReadAsync();
     }
 
     [Theory]

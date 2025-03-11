@@ -1,4 +1,4 @@
-using Diva.Zengin.Formats;
+using Diva.Zengin.Records;
 using Riok.Mapperly.Abstractions;
 
 namespace Diva.Zengin.Mappers;

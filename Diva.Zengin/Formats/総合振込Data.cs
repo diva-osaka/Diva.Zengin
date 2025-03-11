@@ -3,7 +3,9 @@ namespace Diva.Zengin.Formats;
 /// <summary>
 /// 総合振込のデータ・レコードを表すクラス。
 /// </summary>
-public class 総合振込Data : IRecord
+[FluentSetter]
+[IndexToLengthMap]
+public partial class 総合振込Data : IRecord
 {
     /// <summary>
     /// データ区分 (N(1))  

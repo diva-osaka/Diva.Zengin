@@ -118,10 +118,10 @@ public class ZenginReader<T>
     private static async Task<List<TSequence>> CreateReader<TSequence, THeader, TData, TTrailer, TEnd>(string? path,
         Stream? stream, FileFormat format)
         where TSequence : ISequence<THeader, TData, TTrailer, TEnd>, new()
-        where THeader : class, IRecord, new()
-        where TData : class, IRecord, new()
-        where TTrailer : class, IRecord, new()
-        where TEnd : class, IRecord, new()
+        where THeader : class, IRecord, IIndexToLengthMap, new()
+        where TData : class, IRecord, IIndexToLengthMap, new()
+        where TTrailer : class, IRecord, IIndexToLengthMap, new()
+        where TEnd : class, IRecord, IIndexToLengthMap, new()
     {
         var reader = stream != null
             ? new ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>(stream)

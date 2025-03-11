@@ -7,7 +7,9 @@ namespace Diva.Zengin.Formats;
 /// 入出金取引明細のデータ・レコードを表すクラス。
 /// （普通預金・当座預金・貯蓄預金の場合）
 /// </summary>
-public class 入出金取引明細Data1 : IRecord
+[FluentSetter]
+[IndexToLengthMap]
+public partial class 入出金取引明細Data1 : IRecord
 {
     /// <summary>
     /// データ区分 (N(1))

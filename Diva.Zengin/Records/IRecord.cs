@@ -1,4 +1,4 @@
-namespace Diva.Zengin.Formats;
+namespace Diva.Zengin.Records;
 
 public interface IRecord
 {

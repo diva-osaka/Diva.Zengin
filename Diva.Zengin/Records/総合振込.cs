@@ -1,4 +1,4 @@
-namespace Diva.Zengin.Formats;
+namespace Diva.Zengin.Records;
 
 public class 総合振込 : ISequence<総合振込Header, 総合振込Data, 総合振込Trailer, 総合振込End>
 {

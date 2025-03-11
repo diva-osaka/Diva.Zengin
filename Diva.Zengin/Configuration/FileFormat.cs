@@ -1,4 +1,4 @@
-namespace Diva.Zengin.Formats;
+namespace Diva.Zengin.Configuration;
 
 public enum FileFormat
 {

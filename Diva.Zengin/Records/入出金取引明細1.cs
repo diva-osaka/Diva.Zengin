@@ -1,4 +1,4 @@
-namespace Diva.Zengin.Formats;
+namespace Diva.Zengin.Records;
 
 /// <summary>
 /// 入出金明細（普通預金・当座預金・貯蓄預金の場合）

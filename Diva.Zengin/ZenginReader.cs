@@ -1,4 +1,5 @@
-using Diva.Zengin.Formats;
+using Diva.Zengin.Configuration;
+using Diva.Zengin.Records;
 
 namespace Diva.Zengin;
 
@@ -6,6 +7,7 @@ public class ZenginReader<T>
 {
     private readonly string? _path;
     private readonly Stream? _stream;
+    private readonly ZenginConfiguration? _config;
 
     public ZenginReader(string path)
     {
@@ -17,7 +19,19 @@ public class ZenginReader<T>
         _stream = stream ?? throw new ArgumentNullException(nameof(stream));
     }
 
-    public async Task<T?> ReadAsync(FileFormat format = FileFormat.Csv)
+    public ZenginReader(string path, ZenginConfiguration config)
+    {
+        _path = path ?? throw new ArgumentNullException(nameof(path));
+        _config = config ?? throw new ArgumentNullException(nameof(config));
+    }
+
+    public ZenginReader(Stream stream, ZenginConfiguration config)
+    {
+        _stream = stream ?? throw new ArgumentNullException(nameof(stream));
+        _config = config ?? throw new ArgumentNullException(nameof(config));
+    }
+    
+    public async Task<T?> ReadAsync()
     {
         if (_path == null && _stream == null)
             throw new InvalidOperationException("Both path and stream cannot be null.");
@@ -64,7 +78,7 @@ public class ZenginReader<T>
         {
             var result =
                 await CreateReader<振込入金通知A, 振込入金通知Header, 振込入金通知DataA, 振込入金通知Trailer, 振込入金通知End>(_path, _stream,
-                    format).ConfigureAwait(false);
+                    _config).ConfigureAwait(false);
 
             if (result.Count == 0 && isSingleResult)
                 return default; // null
@@ -78,7 +92,7 @@ public class ZenginReader<T>
         {
             var result =
                 await CreateReader<入出金取引明細1, 入出金取引明細Header, 入出金取引明細Data1, 入出金取引明細Trailer, 入出金取引明細End>(_path, _stream,
-                    format).ConfigureAwait(false);
+                    _config).ConfigureAwait(false);
 
             if (result.Count == 0 && isSingleResult)
                 return default; // null
@@ -90,7 +104,7 @@ public class ZenginReader<T>
 
         if (sequenceType == typeof(総合振込))
         {
-            var result = await CreateReader<総合振込, 総合振込Header, 総合振込Data, 総合振込Trailer, 総合振込End>(_path, _stream, format)
+            var result = await CreateReader<総合振込, 総合振込Header, 総合振込Data, 総合振込Trailer, 総合振込End>(_path, _stream, _config)
                 .ConfigureAwait(false);
 
             if (result.Count == 0 && isSingleResult)
@@ -116,7 +130,7 @@ public class ZenginReader<T>
     }
 
     private static async Task<List<TSequence>> CreateReader<TSequence, THeader, TData, TTrailer, TEnd>(string? path,
-        Stream? stream, FileFormat format)
+        Stream? stream, ZenginConfiguration? config)
         where TSequence : ISequence<THeader, TData, TTrailer, TEnd>, new()
         where THeader : class, IRecord, IIndexToLengthMap, new()
         where TData : class, IRecord, IIndexToLengthMap, new()
@@ -127,6 +141,7 @@ public class ZenginReader<T>
             ? new ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>(stream)
             : new ZenginReaderCore<TSequence, THeader, TData, TTrailer, TEnd>(path!);
 
-        return await reader.ReadAsync(format).ConfigureAwait(false);
+        config ??= new ZenginConfiguration();
+        return await reader.ReadAsync(config).ConfigureAwait(false);
     }
 }

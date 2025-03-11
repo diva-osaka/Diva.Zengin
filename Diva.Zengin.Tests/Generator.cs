@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bogus;
-using Diva.Zengin.Formats;
+using Diva.Zengin.Records;
 
 namespace Diva.Zengin.Tests;
 

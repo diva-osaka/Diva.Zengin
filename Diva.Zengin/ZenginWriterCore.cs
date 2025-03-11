@@ -2,8 +2,10 @@ using System.Globalization;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Diva.Zengin.Formats;
+using Diva.Zengin.Configuration;
 using Diva.Zengin.Mappers;
+using Diva.Zengin.Records;
+using 総合振込Data = Diva.Zengin.Records.総合振込Data;
 
 namespace Diva.Zengin;
 
@@ -32,7 +34,7 @@ internal class ZenginWriterCore<TSequence, THeader, TData, TTrailer, TEnd>
         _stream = stream ?? throw new ArgumentNullException(nameof(stream));
     }
 
-    public async Task WriteAsync(List<TSequence> sequences, FileFormat format)
+    public async Task WriteAsync(List<TSequence> sequences, ZenginConfiguration config)
     {
         if (sequences == null || sequences.Count == 0)
             throw new ArgumentNullException(nameof(sequences));
@@ -57,7 +59,7 @@ internal class ZenginWriterCore<TSequence, THeader, TData, TTrailer, TEnd>
             throw new InvalidOperationException("Both path and stream cannot be null.");
         }
 
-        var config = format switch
+        var csvConfiguration = config.FileFormat switch
         {
             FileFormat.Zengin => new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -67,13 +69,13 @@ internal class ZenginWriterCore<TSequence, THeader, TData, TTrailer, TEnd>
             {
                 HasHeaderRecord = false, ShouldQuote = _ => true,
             },
-            _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(config), config, null)
         };
 
         try
         {
             await using var writer = new StreamWriter(streamToUse, encoding, leaveOpen: streamToClose == null);
-            await using var csv = new CsvWriter(writer, config);
+            await using var csv = new CsvWriter(writer, csvConfiguration);
             RegisterClassMaps(csv);
 
             foreach (var sequence in sequences)

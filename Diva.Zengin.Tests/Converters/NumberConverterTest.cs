@@ -70,4 +70,32 @@ public class NumberConverterTest
         Assert.Equal("123", NumberConverter.ConvertToString(123, 3));
         Assert.Equal("0456", NumberConverter.ConvertToString(456, 4));
     }
+    
+    [Fact]
+    public void ConvertToString_NegativeIntegerValue_RemovesNegativeSign()
+    {
+        Assert.Equal("123", NumberConverter.ConvertToString(-123, 3));
+        Assert.Equal("0456", NumberConverter.ConvertToString(-456, 4));
+    }
+
+    [Fact]
+    public void ConvertToString_NegativeDecimalValue_RemovesNegativeSignAndDecimalPoint()
+    {
+        Assert.Equal("123", NumberConverter.ConvertToString(-123m, 3));
+        Assert.Equal("0123", NumberConverter.ConvertToString(-123m, 4));
+    }
+
+    [Fact]
+    public void ConvertToString_IntegerValue_TrimsToCount()
+    {
+        Assert.Equal("234", NumberConverter.ConvertToString(1234, 3));
+        Assert.Equal("3456", NumberConverter.ConvertToString(123456, 4));
+    }
+
+    [Fact]
+    public void ConvertToString_DecimalValue_TrimsToCount()
+    {
+        Assert.Equal("234", NumberConverter.ConvertToString(1234m, 3));
+        Assert.Equal("3456", NumberConverter.ConvertToString(123456m, 4));
+    }
 }

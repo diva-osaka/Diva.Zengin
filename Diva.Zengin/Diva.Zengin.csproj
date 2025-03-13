@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>Diva.Zengin</PackageId>
-        <Version>1.1.1</Version>
+        <Version>1.2.0</Version>
         <Authors>DIVA Co., Ltd.</Authors>
         <Company>DIVA Co., Ltd.</Company>
         <PackageDescription></PackageDescription>

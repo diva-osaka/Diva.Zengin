@@ -39,11 +39,26 @@ internal static class NumberConverter
             return Convert.ToInt32(value).ToString($"D{count}", CultureInfo.InvariantCulture);
         }
         
-        if (value is decimal decimalValue)
+        switch (value)
         {
-            return decimalValue.ToString(new string('0', count), CultureInfo.InvariantCulture);
+            case decimal decimalValue:
+            {
+                if (decimalValue < 0)
+                    decimalValue = -decimalValue; // remove negative sign
+                var result =  decimalValue.ToString(new string('0', count), CultureInfo.InvariantCulture);
+                // trimming
+                return result.Length > count ? result[^count..] : result;
+            }
+            case int intValue:
+            {
+                if (intValue < 0)
+                    intValue = -intValue; // remove negative sign
+                var result = intValue.ToString($"D{count}", CultureInfo.InvariantCulture);
+                // trimming
+                return result.Length > count ? result[^count..] : result;
+            }
+            default:
+                return ((IFormattable)value).ToString($"D{count}", CultureInfo.InvariantCulture);
         }
-
-        return ((IFormattable)value).ToString($"D{count}", CultureInfo.InvariantCulture);
     }
 }

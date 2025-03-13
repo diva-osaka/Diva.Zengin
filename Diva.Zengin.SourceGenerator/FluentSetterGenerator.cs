@@ -56,7 +56,20 @@ public class FluentSetterGenerator : IIncrementalGenerator
         {
             var propertyName = p.Name;
             var propertyType = p.Type.ToDisplayString();
+            var xmlComment = p.GetDocumentationCommentXml();
+            var formattedXmlComment = string.Empty;
+            if (xmlComment != null)
+            {
+                var memberTagContent = System.Text.RegularExpressions.Regex.Match(xmlComment, @"<member[^>]*>(.*?)</member>", System.Text.RegularExpressions.RegexOptions.Singleline).Groups[1].Value;
+                formattedXmlComment = string.Join("\n", memberTagContent
+                    .Split('\n')
+                    .Select(line => line.Trim())
+                    .Where(line => !string.IsNullOrWhiteSpace(line))
+                    .Select(line => $"/// {line}"));
+            }
+            
             var method = $$"""
+                           {{formattedXmlComment}}
                            public {{typeSymbol.Name}} Set{{propertyName}}({{propertyType}} value)
                            {
                                this.{{propertyName}} = value;
@@ -86,7 +99,8 @@ public class FluentSetterGenerator : IIncrementalGenerator
                 : $"this.{propertyName} = {parseMethod}(value);";
 
             method += $$"""
-
+                        
+                        {{formattedXmlComment}}
                         public {{typeSymbol.Name}} Set{{propertyName}}(string value)
                         {
                             {{parseCode}}

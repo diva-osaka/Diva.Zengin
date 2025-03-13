@@ -24,7 +24,7 @@ public partial class 総合振込Data : IRecord
     /// 左詰め・残りスペース
     /// </summary>
     /// <remarks>任意項目</remarks>
-    public string 被仕向銀行名 { get; set; }
+    public string? 被仕向銀行名 { get; set; }
 
     /// <summary>
     /// 被仕向支店番号 (N(3))  
@@ -37,7 +37,7 @@ public partial class 総合振込Data : IRecord
     /// 左詰め・残りスペース
     /// </summary>
     /// <remarks>任意項目</remarks>
-    public string 被仕向支店名 { get; set; }
+    public string? 被仕向支店名 { get; set; }
 
     /// <summary>
     /// 手形交換所番号 (N(4))  
@@ -62,7 +62,7 @@ public partial class 総合振込Data : IRecord
     /// 受取人名 (C(30))  
     /// 左詰め・残りスペース
     /// </summary>
-    public string 受取人名 { get; set; }
+    public string 受取人名 { get; set; } = "";
 
     /// <summary>
     /// 振込金額 (N(10))  
@@ -96,7 +96,9 @@ public partial class 総合振込Data : IRecord
     /// 左詰め残りスペース
     /// </summary>
     /// <remarks>任意項目</remarks>
+    // ReSharper disable InconsistentNaming
     public string? EDI情報 { get; set; }
+    // ReSharper restore InconsistentNaming
 
     /// <summary>
     /// 振込指定区分 (N(1))  

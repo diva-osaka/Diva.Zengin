@@ -143,7 +143,7 @@ public static class Generator
             .RuleFor(h => h.コード区分, f => 0)
             .RuleFor(h => h.振込依頼人コード, f => f.Random.Long(1000000000, 9999999999))
             .RuleFor(h => h.振込依頼人名, f => f.Random.String2(1, 40))
-            .RuleFor(h => h.取組日, f => f.Date.Future().ToString("MMdd"))
+            .RuleFor(h => h.取組日, f => f.Random.Int(11, 1231))
             .RuleFor(h => h.仕向銀行番号, f => f.Random.Int(1000, 9999))
             .RuleFor(h => h.仕向銀行名, f => f.Random.String2(1, 15))
             .RuleFor(h => h.仕向支店番号, f => f.Random.Int(100, 999))

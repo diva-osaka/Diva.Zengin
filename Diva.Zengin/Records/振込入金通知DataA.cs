@@ -76,7 +76,7 @@ public partial class 振込入金通知DataA : IRecord
     /// </summary>
     [Index(7)]
     [TypeConverter(typeof(CharacterTypeConverter), 48)]
-    public string 振込依頼人名 { get; set; }
+    public string 振込依頼人名 { get; set; } = "";
 
     /// <summary>
     /// 仕向銀行名 (C(15))
@@ -112,7 +112,9 @@ public partial class 振込入金通知DataA : IRecord
     /// <remarks>任意項目</remarks>
     [Index(11)]
     [TypeConverter(typeof(CharacterTypeConverter), 20)]
+    // ReSharper disable InconsistentNaming
     public string? EDI情報 { get; set; }
+    // ReSharper restore InconsistentNaming
 
     /// <summary>
     /// ダミー (C(52))

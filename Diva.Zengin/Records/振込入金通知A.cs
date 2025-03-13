@@ -4,7 +4,9 @@ namespace Diva.Zengin.Records;
 /// 振込入金通知の全体を表すクラス。
 /// フォーマットA
 /// </summary>
+// ReSharper disable InconsistentNaming
 public class 振込入金通知A : ISequence<振込入金通知Header, 振込入金通知DataA, 振込入金通知Trailer, 振込入金通知End>
+// ReSharper restore InconsistentNaming
 {
     public 振込入金通知Header Header { get; set; } = new();
     public List<振込入金通知DataA> DataList { get; set; } = new();

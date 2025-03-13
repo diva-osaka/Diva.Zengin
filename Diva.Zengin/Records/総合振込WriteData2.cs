@@ -33,7 +33,7 @@ public partial class 総合振込WriteData2 : IRecord
     /// <remarks>任意項目</remarks>
     [Index(2)]
     [TypeConverter(typeof(CharacterTypeConverter), 15)]
-    public string 被仕向銀行名 { get; set; }
+    public string? 被仕向銀行名 { get; set; }
 
     /// <summary>
     /// 被仕向支店番号 (N(3))  
@@ -50,7 +50,7 @@ public partial class 総合振込WriteData2 : IRecord
     /// <remarks>任意項目</remarks>
     [Index(4)]
     [TypeConverter(typeof(CharacterTypeConverter), 15)]
-    public string 被仕向支店名 { get; set; }
+    public string? 被仕向支店名 { get; set; }
 
     /// <summary>
     /// 手形交換所番号 (N(4))  
@@ -83,7 +83,7 @@ public partial class 総合振込WriteData2 : IRecord
     /// </summary>
     [Index(8)]
     [TypeConverter(typeof(CharacterTypeConverter), 30)]
-    public string 受取人名 { get; set; }
+    public string 受取人名 { get; set; } = "";
 
     /// <summary>
     /// 振込金額 (N(10))  

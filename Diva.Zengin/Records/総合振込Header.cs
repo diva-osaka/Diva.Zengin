@@ -49,15 +49,15 @@ public partial class 総合振込Header : IRecord
     /// </summary>
     [Index(4)]
     [TypeConverter(typeof(CharacterTypeConverter), 40)]
-    public string 振込依頼人名 { get; set; }
+    public string 振込依頼人名 { get; set; } = "";
 
     /// <summary>
     /// 取組日 (N(4))  
     /// 振込日を表わす。 MMDD (月-日)
     /// </summary>
     [Index(5)]
-    [TypeConverter(typeof(CharacterTypeConverter), 4)]
-    public string 取組日 { get; set; }
+    [TypeConverter(typeof(NumberTypeConverter<int>), 4)]
+    public int 取組日 { get; set; }
 
     /// <summary>
     /// 仕向銀行番号 (N(4))  
@@ -74,7 +74,7 @@ public partial class 総合振込Header : IRecord
     /// <remarks>任意項目</remarks>
     [Index(7)]
     [TypeConverter(typeof(CharacterTypeConverter), 15)]
-    public string 仕向銀行名 { get; set; }
+    public string? 仕向銀行名 { get; set; }
 
     /// <summary>
     /// 仕向支店番号 (N(3))  
@@ -91,7 +91,7 @@ public partial class 総合振込Header : IRecord
     /// <remarks>任意項目</remarks>
     [Index(9)]
     [TypeConverter(typeof(CharacterTypeConverter), 15)]
-    public string 仕向支店名 { get; set; }
+    public string? 仕向支店名 { get; set; }
 
     /// <summary>
     /// 預金種目（依頼人） (N(1))  

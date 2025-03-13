@@ -177,7 +177,9 @@ public partial class 入出金取引明細Data1 : IRecord
     /// <remarks>任意項目</remarks>
     [Index(18)]
     [TypeConverter(typeof(CharacterTypeConverter), 20)]
+    // ReSharper disable InconsistentNaming
     public string? EDI情報 { get; set; }
+    // ReSharper restore InconsistentNaming
     
     /// <summary>
     /// ダミー (C(1))

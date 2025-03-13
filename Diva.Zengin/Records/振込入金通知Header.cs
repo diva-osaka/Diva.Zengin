@@ -72,7 +72,7 @@ public partial class 振込入金通知Header : IRecord
     /// </summary>
     [Index(7)]
     [TypeConverter(typeof(CharacterTypeConverter), 15)]
-    public string 銀行名 { get; set; }
+    public string 銀行名 { get; set; } = "";
 
     /// <summary>
     /// 支店コード (N(3))
@@ -88,7 +88,7 @@ public partial class 振込入金通知Header : IRecord
     /// </summary>
     [Index(9)]
     [TypeConverter(typeof(CharacterTypeConverter), 15)]
-    public string 支店名 { get; set; }
+    public string 支店名 { get; set; } = "";
 
     /// <summary>
     /// 預金種目 (N(1))
@@ -112,7 +112,7 @@ public partial class 振込入金通知Header : IRecord
     /// </summary>
     [Index(12)]
     [TypeConverter(typeof(CharacterTypeConverter), 40)]
-    public string 口座名 { get; set; }
+    public string 口座名 { get; set; } = "";
 
     /// <summary>
     /// ダミー (C(93))

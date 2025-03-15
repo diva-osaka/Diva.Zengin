@@ -34,6 +34,10 @@ public static class StringConverter
                 case >= 'ァ' and <= 'ヶ':
                     sb.Append(ConvertHalfKatakana(c));
                     break;
+                case 'ー': 
+                    // 長音→マイナス
+                    sb.Append('-');
+                    break;
                 case '\u309B':
                 case '\u3099':
                     // 濁点

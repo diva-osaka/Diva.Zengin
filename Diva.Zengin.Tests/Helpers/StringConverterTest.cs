@@ -19,6 +19,7 @@ public class StringConverterTest
     [InlineData("ぁぃぅぇぉっゃゅょゎゕゖ", "ｱｲｳｴｵﾂﾔﾕﾖﾜｶｹ")]
     [InlineData("ァィゥェォッャュョヮヵヶ", "ｱｲｳｴｵﾂﾔﾕﾖﾜｶｹ")]
     [InlineData("ガギグゲゴパピプペポ", "ｶﾞｷﾞｸﾞｹﾞｺﾞﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ")]
+    [InlineData("ー", "-")]
     [InlineData("（）＋，－．／：？￥¥", @"()+,-./:?\\")]
     [InlineData("「」", "｢｣")]
     [InlineData("　\t", "  ")]

@@ -1,9 +1,9 @@
 using System.Text;
-using Diva.Zengin.Helpers;
+using Diva.Zengin.Converters;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace Diva.Zengin.Tests.Helpers;
+namespace Diva.Zengin.Tests.Converters;
 
 [TestSubject(typeof(StringConverter))]
 public class StringConverterTest
@@ -26,7 +26,7 @@ public class StringConverterTest
     public void ToHalfWidth_ShouldConvertCorrectly(string input, string expected)
     {
         // Act
-        var result = StringConverter.ToHalfWidth(input);
+        var result = input.ToHalfWidth();
 
         // Assert
         Assert.Equal(expected, result);
@@ -43,7 +43,7 @@ public class StringConverterTest
         var normalizedInput = input.Normalize(form);
 
         // Act
-        var result = StringConverter.ToHalfWidth(normalizedInput);
+        var result = normalizedInput.ToHalfWidth();
 
         // Assert
         Assert.Equal(expected, result);

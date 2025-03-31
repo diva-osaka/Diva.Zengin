@@ -1,9 +1,15 @@
 using System.Text;
 
-namespace Diva.Zengin.Helpers;
+namespace Diva.Zengin.Converters;
 
 public static class StringConverter
 {
+    /// <summary>
+    /// 全角文字を半角文字に変換。
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    /// <remarks>「付録1. 使用文字一覧」のみに変換し、変換できない文字は半角スペースに変換する。</remarks>
     public static string? ToHalfWidth(this string? input)
     {
         if (input == null)

@@ -3,7 +3,7 @@ using Diva.Zengin.Converters;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace Diva.Zengin.Tests.Helpers;
+namespace Diva.Zengin.Tests.Converters;
 
 [TestSubject(typeof(StringConverter))]
 public class StringConverterTest

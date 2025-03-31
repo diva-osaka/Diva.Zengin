@@ -5,11 +5,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>Diva.Zengin</PackageId>
-        <Version>1.2.1</Version>
+        <Version>1.2.3</Version>
         <Authors>DIVA Co., Ltd.</Authors>
         <Company>DIVA Co., Ltd.</Company>
         <PackageDescription></PackageDescription>
         <RepositoryUrl>https://github.com/diva-osaka/Diva.Zengin</RepositoryUrl>
+        <DebugType>embedded</DebugType>
     </PropertyGroup>
 
     <ItemGroup>

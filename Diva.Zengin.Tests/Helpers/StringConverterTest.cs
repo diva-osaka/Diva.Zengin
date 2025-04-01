@@ -1,9 +1,9 @@
 using System.Text;
-using Diva.Zengin.Converters;
+using Diva.Zengin.Helpers;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace Diva.Zengin.Tests.Converters;
+namespace Diva.Zengin.Tests.Helpers;
 
 [TestSubject(typeof(StringConverter))]
 public class StringConverterTest

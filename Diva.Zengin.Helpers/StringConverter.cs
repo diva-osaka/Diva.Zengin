@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Diva.Zengin.Converters;
+namespace Diva.Zengin.Helpers;
 
 public static class StringConverter
 {

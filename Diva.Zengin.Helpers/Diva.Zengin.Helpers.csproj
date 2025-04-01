@@ -4,13 +4,14 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
-        <PackageId>Diva.Zengin.Converters</PackageId>
-        <Version>1.0.0</Version>
+        <PackageId>Diva.Zengin.Helpers</PackageId>
+        <Version>1.0.1</Version>
         <Authors>DIVA Co., Ltd.</Authors>
         <Company>DIVA Co., Ltd.</Company>
         <PackageDescription></PackageDescription>
         <RepositoryUrl>https://github.com/diva-osaka/Diva.Zengin</RepositoryUrl>
         <DebugType>embedded</DebugType>
+        <RootNamespace>Diva.Zengin.Helpers</RootNamespace>
     </PropertyGroup>
 
 </Project>

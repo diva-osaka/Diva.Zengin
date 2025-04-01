@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Diva.Zengin.Converters\Diva.Zengin.Converters.csproj" />
+    <ProjectReference Include="..\Diva.Zengin.Helpers\Diva.Zengin.Helpers.csproj" />
     <ProjectReference Include="..\Diva.Zengin\Diva.Zengin.csproj" />
   </ItemGroup>
   

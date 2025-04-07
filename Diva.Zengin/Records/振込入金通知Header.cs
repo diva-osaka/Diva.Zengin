@@ -7,6 +7,7 @@ namespace Diva.Zengin.Records;
 /// 振込入金通知のヘッダー・レコードを表すクラス。
 /// </summary>
 [FluentSetter]
+[TypeConverterGetter]
 [IndexToLengthMap]
 public partial class 振込入金通知Header : IRecord
 {

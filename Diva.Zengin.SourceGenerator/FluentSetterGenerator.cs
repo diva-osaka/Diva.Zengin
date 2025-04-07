@@ -50,7 +50,7 @@ public class FluentSetterGenerator : IIncrementalGenerator
 
         var publicProperties = typeSymbol.GetMembers()
             .OfType<IPropertySymbol>()
-            .Where(p => p.DeclaredAccessibility == Accessibility.Public && !p.IsStatic && p.SetMethod != null);
+            .Where(p => p.DeclaredAccessibility == Accessibility.Public && p is { IsStatic: false, SetMethod: not null });
 
         var methods = publicProperties.Select(p =>
         {

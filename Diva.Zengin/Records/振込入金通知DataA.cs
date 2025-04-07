@@ -8,6 +8,7 @@ namespace Diva.Zengin.Records;
 /// フォーマットA
 /// </summary>
 [FluentSetter]
+[TypeConverterGetter]
 [IndexToLengthMap]
 public partial class 振込入金通知DataA : IRecord
 {

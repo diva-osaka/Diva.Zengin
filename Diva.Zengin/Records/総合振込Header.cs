@@ -7,6 +7,7 @@ namespace Diva.Zengin.Records;
 /// 総合振込のヘッダー・レコードを表すクラス。
 /// </summary>
 [FluentSetter]
+[TypeConverterGetter]
 [IndexToLengthMap]
 public partial class 総合振込Header : IRecord
 {

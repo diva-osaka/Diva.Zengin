@@ -8,6 +8,7 @@ namespace Diva.Zengin.Records;
 /// （普通預金・当座預金・貯蓄預金の場合）
 /// </summary>
 [FluentSetter]
+[TypeConverterGetter]
 [IndexToLengthMap]
 public partial class 入出金取引明細Data1 : IRecord
 {

@@ -5,6 +5,7 @@ namespace Diva.Zengin.Records;
 /// </summary>
 [FluentSetter]
 [IndexToLengthMap]
+[TypeConverterGetter]
 public partial class 総合振込Data : IRecord
 {
     /// <summary>

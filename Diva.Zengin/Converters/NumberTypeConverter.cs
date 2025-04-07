@@ -26,7 +26,7 @@ internal class NumberTypeConverter<T>(int count = 1) : ITypeConverter
         }
     }
 
-    public string? ConvertToString(object? value, IWriterRow row, MemberMapData memberMapData)
+    public string ConvertToString(object? value, IWriterRow row, MemberMapData memberMapData)
     {
         try
         {
